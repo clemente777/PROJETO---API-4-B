@@ -252,3 +252,8 @@ Ao cadastrar ou editar uma pizza, o backend valida os dados enviados. As regras 
   "status_validos": '["disponivel", "indisponivel", "promocao"]'
 }
 ```
+## Demonstração do Sistema
+
+![Sistema funcionando](gif/pizzaria.gif)
+
+## Contribuidores 🍕
