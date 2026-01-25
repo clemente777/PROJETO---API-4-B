@@ -4,14 +4,14 @@
         "nome": "carne na nata",
         "descricao": "sequinha",
         "valor": 50,
-        "status": "disponivel"
+        "status": "indisponivel"
     },
     {
         "id": 2,
         "nome": "carne de boi",
         "descricao": "boazinha",
         "valor": 35,
-        "status": "indisponivel"
+        "status": "disponivel"
     },
     {
         "id": 3,

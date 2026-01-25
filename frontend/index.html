@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Pizzaria 🍕</title>
+<title>Pizzaria dos manos</title>
 
 <style>
 body {
@@ -89,7 +89,7 @@ button:hover {
 <body>
 
 <header>
-    <h1>Pizzaria Sabor Italiano 🍕</h1>
+    <h1>Pizzaria dos Manos</h1>
 </header>
 
 <div class="container">
@@ -212,13 +212,13 @@ form.onsubmit = async e => {
         const data = await res.json();
         if (!res.ok) throw new Error(data.erro);
 
-        sucesso.innerText = "✅ Item salvo com sucesso!";
+        sucesso.innerText = " Item salvo com sucesso!";
         form.reset();
         idInput.value = "";
         listar();
 
     } catch (e) {
-        erro.innerText = "❌ " + e.message;
+        erro.innerText = "erro " + e.message;
     }
 };
 
@@ -243,11 +243,11 @@ async function remover(id) {
         const res = await fetch(`${API}/${id}`, { method: "DELETE" });
         if (!res.ok) throw new Error();
 
-        sucesso.innerText = "🗑 Pizza removida!";
+        sucesso.innerText = " Pizza removida!";
         listar();
 
     } catch {
-        erro.innerText = "❌ Erro ao remover pizza.";
+        erro.innerText = " Erro ao remover pizza.";
     }
 }
 
@@ -272,11 +272,11 @@ async function mudarStatus(id) {
         const data = await resp.json();
         if (!resp.ok) throw new Error(data.erro);
 
-        sucesso.innerText = "🔄 Status atualizado!";
+        sucesso.innerText = " Status atualizado!";
         listar();
 
     } catch (e) {
-        erro.innerText = "❌ Erro ao alterar status.";
+        erro.innerText = " Erro ao alterar status.";
     }
 }
 
