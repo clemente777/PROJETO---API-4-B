@@ -188,7 +188,7 @@ PATCH /pizzas/:id/status - Altera apenas o status da pizza.
 ]
 ```
 
-### DELETE PIZZAS
+### DELETE /pizzas/:id
 ```bash
 DELETE /pizzas/:id - Remove uma pizza do cardápio.
 ```
