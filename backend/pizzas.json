@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "nome": "carne na nata",
+        "descricao": "sequinha",
+        "valor": 50,
+        "status": "disponivel"
+    },
+    {
+        "id": 2,
+        "nome": "carne de boi",
+        "descricao": "boazinha",
+        "valor": 35,
+        "status": "indisponivel"
+    },
+    {
+        "id": 3,
+        "nome": "carne de porco",
+        "descricao": "chiqueiro",
+        "valor": 20,
+        "status": "promocao"
+    }
+]

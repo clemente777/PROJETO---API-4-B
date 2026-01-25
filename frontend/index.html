@@ -1,107 +1,290 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <title>Pizzaria Sabor Italiano</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8">
+<title>Pizzaria 🍕</title>
 
-        header {
-            background-color: #c0392b;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    margin: 0;
+}
 
-        .container {
-            width: 80%;
-            margin: 30px auto;
-        }
+header {
+    background: #c0392b;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
 
-        .cardapio {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-        }
+.container {
+    width: 90%;
+    max-width: 1000px;
+    margin: 20px auto;
+}
 
-        .pizza {
-            border-bottom: 1px solid #ddd;
-            padding: 10px 0;
-        }
+form {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
 
-        .pizza:last-child {
-            border-bottom: none;
-        }
+form input, form select, form button {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+}
 
-        .pizza h3 {
-            margin: 0;
-            color: #c0392b;
-        }
+button {
+    background: #27ae60;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
 
-        .pizza p {
-            margin: 5px 0;
-            color: #555;
-        }
+button:hover {
+    background: #219150;
+}
 
-        .preco {
-            font-weight: bold;
-            color: #27ae60;
-        }
+.loading {
+    color: #2980b9;
+    font-weight: bold;
+}
 
-        footer {
-            text-align: center;
-            padding: 15px;
-            background-color: #eee;
-            margin-top: 30px;
-        }
-    </style>
+.erro {
+    color: red;
+    margin: 10px 0;
+}
+
+.sucesso {
+    color: green;
+    margin: 10px 0;
+}
+
+.filtros {
+    margin-bottom: 15px;
+}
+
+.card {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    margin: 0;
+    color: #c0392b;
+}
+
+.card button {
+    margin-right: 5px;
+    margin-top: 5px;
+}
+</style>
 </head>
+
 <body>
 
-    <header>
-        <h1>Pizzaria Sabor Italiano</h1>
-        <p>As melhores pizzas da cidade 🍕</p>
-    </header>
+<header>
+    <h1>Pizzaria Sabor Italiano 🍕</h1>
+</header>
 
-    <div class="container">
-        <div class="cardapio">
-            <h2>Cardápio</h2>
+<div class="container">
 
-            <div class="pizza">
-                <h3>Pizza Margherita</h3>
-                <p>Molho de tomate, mussarela e manjericão</p>
-                <p class="preco">R$ 35,00</p>
-            </div>
+    <!-- FEEDBACK -->
+    <div class="loading" id="loading" style="display:none">Carregando...</div>
+    <div class="erro" id="erro"></div>
+    <div class="sucesso" id="sucesso"></div>
 
-            <div class="pizza">
-                <h3>Pizza Calabresa</h3>
-                <p>Molho de tomate, mussarela e calabresa</p>
-                <p class="preco">R$ 38,00</p>
-            </div>
+    <!-- FORMULÁRIO -->
+    <form id="form">
+        <input type="hidden" id="id">
 
-            <div class="pizza">
-                <h3>Pizza Portuguesa</h3>
-                <p>Mussarela, presunto, ovo, cebola e azeitona</p>
-                <p class="preco">R$ 42,00</p>
-            </div>
+        <input type="text" id="nome" placeholder="Nome da pizza" required>
+        <input type="number" id="valor" placeholder="Valor (R$)" required>
+        <input type="text" id="descricao" placeholder="Descrição" required>
 
-            <div class="pizza">
-                <h3>Pizza Quatro Queijos</h3>
-                <p>Mussarela, parmesão, provolone e gorgonzola</p>
-                <p class="preco">R$ 45,00</p>
-            </div>
-        </div>
+        <select id="status">
+            <option value="disponivel">Disponível</option>
+            <option value="indisponivel">Indisponível</option>
+            <option value="promocao">Promoção</option>
+        </select>
+
+        <button type="submit">Salvar</button>
+    </form>
+
+    <!-- FILTROS -->
+    <div class="filtros">
+        <select id="filtroStatus" onchange="listar()">
+            <option value="">Todos os status</option>
+            <option value="disponivel">Disponível</option>
+            <option value="indisponivel">Indisponível</option>
+            <option value="promocao">Promoção</option>
+        </select>
     </div>
 
-    <footer>
-        <p>📞 Telefone: (11) 99999-9999</p>
-        <p>📍 Rua das Pizzas, 123</p>
-    </footer>
+    <!-- LISTA -->
+    <div id="lista"></div>
+
+</div>
+
+<script>
+const API = "http://localhost:5000/pizzas";
+
+const loading = document.getElementById("loading");
+const erro = document.getElementById("erro");
+const sucesso = document.getElementById("sucesso");
+const lista = document.getElementById("lista");
+
+const form = document.getElementById("form");
+const idInput = document.getElementById("id");
+const nomeInput = document.getElementById("nome");
+const valorInput = document.getElementById("valor");
+const descInput = document.getElementById("descricao");
+const statusInput = document.getElementById("status");
+const filtroStatus = document.getElementById("filtroStatus");
+
+// LISTAR PIZZAS
+async function listar() {
+    loading.style.display = "block";
+    erro.innerText = "";
+    lista.innerHTML = "";
+
+    try {
+        const res = await fetch(API);
+        if (!res.ok) throw new Error();
+
+        let dados = await res.json();
+
+        // filtro por status
+        if (filtroStatus.value) {
+            dados = dados.filter(p => p.status === filtroStatus.value);
+        }
+
+        dados.forEach(p => {
+            lista.innerHTML += `
+            <div class="card">
+                <h3>${p.nome}</h3>
+                <p>${p.descricao}</p>
+                <p>💰 R$ ${p.valor}</p>
+                <p>Status: ${p.status}</p>
+
+                <button onclick="editar(${p.id})">Editar</button>
+                <button onclick="remover(${p.id})">Remover</button>
+                <button onclick="mudarStatus(${p.id})">Mudar status</button>
+            </div>`;
+        });
+
+    } catch {
+        erro.innerText = "Erro ao carregar dados da API.";
+    }
+
+    loading.style.display = "none";
+}
+
+// SALVAR (POST / PUT)
+form.onsubmit = async e => {
+    e.preventDefault();
+    erro.innerText = "";
+    sucesso.innerText = "";
+
+    const pizza = {
+        nome: nomeInput.value,
+        valor: Number(valorInput.value),
+        descricao: descInput.value,
+        status: statusInput.value
+    };
+
+    const id = idInput.value;
+    const metodo = id ? "PUT" : "POST";
+    const url = id ? `${API}/${id}` : API;
+
+    try {
+        const res = await fetch(url, {
+            method: metodo,
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(pizza)
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.erro);
+
+        sucesso.innerText = "✅ Item salvo com sucesso!";
+        form.reset();
+        idInput.value = "";
+        listar();
+
+    } catch (e) {
+        erro.innerText = "❌ " + e.message;
+    }
+};
+
+// EDITAR
+async function editar(id) {
+    const res = await fetch(API);
+    const pizzas = await res.json();
+    const p = pizzas.find(p => p.id === id);
+
+    idInput.value = p.id;
+    nomeInput.value = p.nome;
+    valorInput.value = p.valor;
+    descInput.value = p.descricao;
+    statusInput.value = p.status;
+}
+
+// REMOVER
+async function remover(id) {
+    if (!confirm("Deseja remover?")) return;
+
+    try {
+        const res = await fetch(`${API}/${id}`, { method: "DELETE" });
+        if (!res.ok) throw new Error();
+
+        sucesso.innerText = "🗑 Pizza removida!";
+        listar();
+
+    } catch {
+        erro.innerText = "❌ Erro ao remover pizza.";
+    }
+}
+
+async function mudarStatus(id) {
+    erro.innerText = "";
+    sucesso.innerText = "";
+
+    try {
+        const res = await fetch(API);
+        const pizzas = await res.json();
+        const p = pizzas.find(p => p.id === id);
+
+        const novoStatus =
+            p.status === "disponivel" ? "indisponivel" : "disponivel";
+
+        const resp = await fetch(`${API}/${id}/status`, {
+            method: "PATCH",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ status: novoStatus })
+        });
+
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.erro);
+
+        sucesso.innerText = "🔄 Status atualizado!";
+        listar();
+
+    } catch (e) {
+        erro.innerText = "❌ Erro ao alterar status.";
+    }
+}
+
+
+
+// INICIAL
+listar();
+</script>
 
 </body>
 </html>

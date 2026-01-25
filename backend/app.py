@@ -6,60 +6,177 @@ import os
 app = Flask(__name__)
 CORS(app)
 
+# Nome do arquivo onde os dados das pizzas ficam salvos
 NOME_ARQUIVO = 'pizzas.json'
 
+# Status permitidos no sistema
+STATUS_VALIDOS = ["disponivel", "indisponivel", "promocao"]
+
+# =========================
+# FUNÇÕES DE PERSISTÊNCIA
+# =========================
+
 def ler_dados():
+    # Se o arquivo não existir, cria um arquivo vazio
     if not os.path.exists(NOME_ARQUIVO):
+        with open(NOME_ARQUIVO, 'w', encoding='utf-8') as f:
+            json.dump([], f)
         return []
+
+    # Abre o arquivo JSON e retorna os dados
     with open(NOME_ARQUIVO, 'r', encoding='utf-8') as f:
         return json.load(f)
 
 def salvar_dados(pizzas):
+    # Salva a lista de pizzas no arquivo JSON
     with open(NOME_ARQUIVO, 'w', encoding='utf-8') as f:
         json.dump(pizzas, f, indent=4, ensure_ascii=False)
 
-# Rota para carregar o Front-end
+# =========================
+# ROTA PARA CARREGAR O FRONT-END
+# =========================
+
 @app.route('/')
 def home():
+    # Renderiza o arquivo index.html
     return render_template('index.html')
 
-# Listar pizzas
+# =========================
+# LISTAR PIZZAS (READ)
+# =========================
+
 @app.route('/pizzas', methods=['GET'])
 def obter_sabores():
-    return jsonify(ler_dados())
+    return jsonify(ler_dados()), 200
 
-# Adicionar pizza com ID Automático
+# =========================
+# ADICIONAR PIZZA (CREATE)
+# =========================
+
 @app.route('/pizzas', methods=['POST'])
 def adicionar_pizza():
     pizzas = ler_dados()
     nova_pizza = request.get_json()
 
+    # Verifica se o JSON foi enviado corretamente
+    if not nova_pizza:
+        return jsonify({"erro": "JSON inválido"}), 400
+
+    # Validação dos campos
+    if not nova_pizza.get("nome") or len(nova_pizza["nome"]) < 3:
+        return jsonify({"erro": "Nome deve ter no mínimo 3 caracteres"}), 400
+
+    if not nova_pizza.get("descricao"):
+        return jsonify({"erro": "Descrição é obrigatória"}), 400
+
+    if not isinstance(nova_pizza.get("valor"), (int, float)) or nova_pizza["valor"] <= 0:
+        return jsonify({"erro": "Valor deve ser maior que zero"}), 400
+
+    # Validação do status
+    if nova_pizza.get("status") not in STATUS_VALIDOS:
+        return jsonify({
+            "erro": "Status inválido",
+            "status_validos": STATUS_VALIDOS
+        }), 400
+
     # --- LÓGICA AUTO-INCREMENTO ---
-    if len(pizzas) > 0:
-        # Pega o ID da última pizza da lista e soma 1
-        ultimo_id = max(p['id'] for p in pizzas)
-        novo_id = ultimo_id + 1
-    else:
-        novo_id = 1
-    
-    nova_pizza['id'] = novo_id
-    # ------------------------------
+    novo_id = max([p["id"] for p in pizzas], default=0) + 1
 
-    pizzas.append(nova_pizza)
+    # Cria o objeto final da pizza
+    pizza = {
+        "id": novo_id,
+        "nome": nova_pizza["nome"],
+        "descricao": nova_pizza["descricao"],
+        "valor": nova_pizza["valor"],
+        "status": nova_pizza["status"]
+    }
+
+    pizzas.append(pizza)
     salvar_dados(pizzas)
-    return jsonify(nova_pizza), 201
 
-# Deletar pizza
+    return jsonify(pizza), 201
+
+# =========================
+# EDITAR PIZZA (UPDATE)
+# =========================
+
+@app.route('/pizzas/<int:id>', methods=['PUT'])
+def editar_pizza(id):
+    pizzas = ler_dados()
+    dados = request.get_json()
+
+    if not dados:
+        return jsonify({"erro": "JSON inválido"}), 400
+
+    for pizza in pizzas:
+        if pizza['id'] == id:
+
+            nome = dados.get("nome", pizza["nome"])
+            descricao = dados.get("descricao", pizza["descricao"])
+            valor = dados.get("valor", pizza["valor"])
+
+            if not nome or len(nome) < 3:
+                return jsonify({"erro": "Nome deve ter no mínimo 3 caracteres"}), 400
+
+            if not descricao:
+                return jsonify({"erro": "Descrição é obrigatória"}), 400
+
+            if not isinstance(valor, (int, float)) or valor <= 0:
+                return jsonify({"erro": "Valor inválido"}), 400
+
+            pizza["nome"] = nome
+            pizza["descricao"] = descricao
+            pizza["valor"] = valor
+
+            salvar_dados(pizzas)
+            return jsonify(pizza), 200
+
+    return jsonify({"erro": "Pizza não encontrada"}), 404
+
+# =========================
+# ALTERAR SOMENTE O STATUS (PATCH)
+# =========================
+
+@app.route('/pizzas/<int:id>/status', methods=['PATCH'])
+def alterar_status(id):
+    pizzas = ler_dados()
+    dados = request.get_json()
+
+    if not dados or "status" not in dados:
+        return jsonify({"erro": "Status é obrigatório"}), 400
+
+    if dados["status"] not in STATUS_VALIDOS:
+        return jsonify({
+            "erro": "Status inválido",
+            "status_validos": STATUS_VALIDOS
+        }), 400
+
+    for pizza in pizzas:
+        if pizza["id"] == id:
+            pizza["status"] = dados["status"]
+            salvar_dados(pizzas)
+            return jsonify(pizza), 200
+
+    return jsonify({"erro": "Pizza não encontrada"}), 404
+
+# =========================
+# DELETAR PIZZA (DELETE)
+# =========================
+
 @app.route('/pizzas/<int:id>', methods=['DELETE'])
 def excluir_sabor(id):
     pizzas = ler_dados()
     pizzas_filtradas = [p for p in pizzas if p['id'] != id]
-    
+
     if len(pizzas_filtradas) == len(pizzas):
         return jsonify({"erro": "Pizza não encontrada"}), 404
-        
+
     salvar_dados(pizzas_filtradas)
-    return jsonify({"mensagem": "Removido com sucesso"})
+    return jsonify({"mensagem": "Removido com sucesso"}), 200
+
+# =========================
+# INICIA O SERVIDOR
+# =========================
 
 if __name__ == '__main__':
     app.run(port=5000, host='localhost', debug=True)
