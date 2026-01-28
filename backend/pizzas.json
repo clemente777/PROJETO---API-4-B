@@ -18,6 +18,14 @@
         "nome": "carne de porco",
         "descricao": "chiqueiro",
         "valor": 20,
-        "status": "promocao"
+        "status": "disponivel"
+    },
+    {
+        "id": 4,
+        "nome": "qdqdsad",
+        "descricao": "sadasd",
+        "valor": 33,
+        "status": "indisponivel",
+        "tipo": "tradicional"
     }
 ]

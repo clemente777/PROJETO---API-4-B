@@ -15,6 +15,10 @@ NOME_ARQUIVO = 'pizzas.json'
 # Status permitidos no sistema
 STATUS_VALIDOS = ["disponivel", "indisponivel", "promocao"]
 
+# Tipos de pizzas permitidos no sistema
+TIPOS_PIZZA = ["tradicional", "doce", "vegana"]
+
+
 # FUNÇÕES DE PERSISTÊNCIA
 def ler_dados():
     # Se o arquivo não existir, cria um arquivo vazio
@@ -27,6 +31,7 @@ def ler_dados():
     # Abre o arquivo JSON e retorna os dados salvos
     with open(NOME_ARQUIVO, 'r', encoding='utf-8') as f:
         return json.load(f)
+
 
 def salvar_dados(pizzas):
     # Salva a lista de pizzas no arquivo JSON
@@ -41,11 +46,13 @@ def home():
     # Renderiza o arquivo index.html do frontend
     return render_template('index.html')
 
+
 # LISTAR PIZZAS (READ)
 @app.route('/pizzas', methods=['GET'])
 def obter_sabores():
     # Retorna todas as pizzas cadastradas no sistema
     return jsonify(ler_dados()), 200
+
 
 # ADICIONAR PIZZA (CREATE)
 @app.route('/pizzas', methods=['POST'])
@@ -76,6 +83,13 @@ def adicionar_pizza():
             "status_validos": STATUS_VALIDOS
         }), 400
 
+    # Validação do tipo da pizza (tradicional, doce, vegana, etc)
+    if nova_pizza.get("tipo") not in TIPOS_PIZZA:
+        return jsonify({
+            "erro": "Tipo de pizza inválido",
+            "tipos_validos": TIPOS_PIZZA
+        }), 400
+
     # --- LÓGICA AUTO-INCREMENTO ---
     # Gera um novo ID baseado no maior ID existente
     novo_id = max([p["id"] for p in pizzas], default=0) + 1
@@ -86,7 +100,8 @@ def adicionar_pizza():
         "nome": nova_pizza["nome"],
         "descricao": nova_pizza["descricao"],
         "valor": nova_pizza["valor"],
-        "status": nova_pizza["status"]
+        "status": nova_pizza["status"],
+        "tipo": nova_pizza["tipo"]
     }
 
     # Adiciona a nova pizza na lista
@@ -117,6 +132,7 @@ def editar_pizza(id):
             nome = dados.get("nome", pizza["nome"])
             descricao = dados.get("descricao", pizza["descricao"])
             valor = dados.get("valor", pizza["valor"])
+            tipo = dados.get("tipo", pizza["tipo"])
 
             # Validações
             if not nome or len(nome) < 3:
@@ -128,10 +144,13 @@ def editar_pizza(id):
             if not isinstance(valor, (int, float)) or valor <= 0:
                 return jsonify({"erro": "Valor inválido"}), 400
 
+            
+
             # Atualiza os dados da pizza
             pizza["nome"] = nome
             pizza["descricao"] = descricao
             pizza["valor"] = valor
+            pizza["tipo"] = tipo
 
             # Salva as alterações
             salvar_dados(pizzas)
@@ -169,8 +188,7 @@ def alterar_status(id):
     return jsonify({"erro": "Pizza não encontrada"}), 404
 
 
-# DELETAR PIZZA 
-
+# DELETAR PIZZA
 @app.route('/pizzas/<int:id>', methods=['DELETE'])
 def excluir_sabor(id):
     pizzas = ler_dados()
@@ -186,7 +204,6 @@ def excluir_sabor(id):
     salvar_dados(pizzas_filtradas)
 
     return jsonify({"mensagem": "Removido com sucesso"}), 200
-
 
 
 if __name__ == '__main__':
