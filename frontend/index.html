@@ -3,87 +3,195 @@
 <head>
 <meta charset="UTF-8">
 <title>Pizzaria dos manos</title>
-
 <style>
+:root {
+    --vermelho: #c0392b;
+    --verde: #27ae60;
+    --verde-hover: #219150;
+    --azul: #2980b9;
+    --cinza-bg: #f4f6f8;
+    --cinza-texto: #555;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: var(--cinza-bg);
     margin: 0;
+    color: var(--cinza-texto);
 }
 
+/* HEADER */
 header {
-    background: #c0392b;
+    background: linear-gradient(135deg, #c0392b, #e74c3c);
     color: white;
-    padding: 20px;
+    padding: 25px;
     text-align: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
 }
 
+header h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+/* CONTAINER */
 .container {
     width: 90%;
     max-width: 1000px;
-    margin: 20px auto;
+    margin: 25px auto;
 }
 
+/* FORM */
 form {
     background: white;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
-form input, form select, form button {
+form input,
+form select {
     width: 100%;
-    padding: 8px;
-    margin: 5px 0;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
 }
 
-button {
-    background: #27ae60;
-    color: white;
-    border: none;
-    cursor: pointer;
+form input:focus,
+form select:focus {
+    outline: none;
+    border-color: var(--vermelho);
 }
 
-button:hover {
-    background: #219150;
-}
-
-.loading {
-    color: #2980b9;
+form button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 6px;
+    font-size: 1rem;
     font-weight: bold;
 }
 
-.erro {
-    color: red;
-    margin: 10px 0;
+/* BOTÕES */
+button {
+    background: var(--verde);
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s ease;
 }
 
-.sucesso {
-    color: green;
-    margin: 10px 0;
+button:hover {
+    background: var(--verde-hover);
+    transform: scale(1.02);
 }
 
-.filtros {
-    margin-bottom: 15px;
-}
-
-.card {
-    background: white;
-    border-radius: 8px;
-    padding: 15px;
+/* FEEDBACK */
+.loading {
+    color: var(--azul);
+    font-weight: bold;
     margin-bottom: 10px;
 }
 
-.card h3 {
-    margin: 0;
-    color: #c0392b;
+.erro {
+    color: #e74c3c;
+    margin: 10px 0;
+    font-weight: bold;
 }
 
+.sucesso {
+    color: var(--verde);
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+/* FILTROS */
+.filtros {
+    margin-bottom: 20px;
+}
+
+.filtros select {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* CARDS */
+.card {
+    background: white;
+    border-radius: 10px;
+    padding: 18px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.card h3 {
+    margin: 0 0 8px 0;
+    color: var(--vermelho);
+}
+
+.card p {
+    margin: 4px 0;
+}
+
+/* BOTÕES DO CARD */
 .card button {
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
     margin-right: 5px;
-    margin-top: 5px;
+    margin-top: 8px;
+}
+
+.card button:nth-child(1) {
+    background: #3498db;
+}
+
+.card button:nth-child(1):hover {
+    background: #2980b9;
+}
+
+.card button:nth-child(2) {
+    background: #e74c3c;
+}
+
+.card button:nth-child(2):hover {
+    background: #c0392b;
+}
+
+.card button:nth-child(3) {
+    background: #f39c12;
+}
+
+.card button:nth-child(3):hover {
+    background: #d68910;
+}
+
+/* RESPONSIVO */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.6rem;
+    }
+
+    .card button {
+        width: 100%;
+        margin-right: 0;
+    }
 }
 </style>
+
 </head>
 
 <body>
