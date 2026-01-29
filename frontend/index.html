@@ -231,7 +231,21 @@ button:hover{
             <option value="indisponivel">Indisponível</option>
             <option value="promocao">Promoção</option>
         </select>
+        
+        <select id="tipo">
+                <option value="tradicional">Tradicional</option>
+                <option value="doce">Doce</option>
+                <option value="vegana">Vegana</option>
+                <option value="vegetariana">Vegetariana</option>
+                <option value="especial">Especial</option>
+                <option value="gourmet">Gourmet</option>
+                <option value="integral">Integral</option>
+                <option value="sem_gluten">Sem Glúten</option>
+        </select>
 
+
+        
+        
         <button type="submit">Salvar</button>
     </form>
 
@@ -264,6 +278,7 @@ const nomeInput = document.getElementById("nome");
 const valorInput = document.getElementById("valor");
 const descInput = document.getElementById("descricao");
 const statusInput = document.getElementById("status");
+const tipoInput = document.getElementById("tipo");
 const filtroStatus = document.getElementById("filtroStatus");
 
 // LISTAR PIZZAS
@@ -289,6 +304,7 @@ async function listar() {
                 <h3>${p.nome}</h3>
                 <p>${p.descricao}</p>
                 <p>💰 R$ ${p.valor}</p>
+                <p>Tipo: ${p.tipo}</p>
                 <p>Status: ${p.status}</p>
 
                 <button onclick="editar(${p.id})">Editar</button>
@@ -314,7 +330,8 @@ form.onsubmit = async e => {
         nome: nomeInput.value,
         valor: Number(valorInput.value),
         descricao: descInput.value,
-        status: statusInput.value
+        status: statusInput.value,
+        tipo: tipoInput.value
     };
 
     const id = idInput.value;
@@ -352,6 +369,7 @@ async function editar(id) {
     valorInput.value = p.valor;
     descInput.value = p.descricao;
     statusInput.value = p.status;
+    tipoInput.value = p.tipo;
 }
 
 // REMOVER
