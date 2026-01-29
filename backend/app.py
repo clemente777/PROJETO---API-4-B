@@ -140,6 +140,7 @@ def editar_pizza(id):
 
             if not descricao:
                 return jsonify({"erro": "Descrição é obrigatória"}), 400
+            
 
             if not isinstance(valor, (int, float)) or valor <= 0:
                 return jsonify({"erro": "Valor inválido"}), 400

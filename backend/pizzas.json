@@ -4,7 +4,7 @@
         "nome": "carne na nata",
         "descricao": "sequinha",
         "valor": 50,
-        "status": "indisponivel"
+        "status": "disponivel"
     },
     {
         "id": 2,
@@ -27,5 +27,13 @@
         "valor": 33,
         "status": "indisponivel",
         "tipo": "tradicional"
+    },
+    {
+        "id": 5,
+        "nome": "carne de sol",
+        "descricao": "d",
+        "valor": 33,
+        "status": "indisponivel",
+        "tipo": "doce"
     }
 ]
