@@ -16,7 +16,7 @@ NOME_ARQUIVO = 'pizzas.json'
 STATUS_VALIDOS = ["disponivel", "indisponivel", "promocao"]
 
 # Tipos de pizzas permitidos no sistema
-TIPOS_PIZZA = ["tradicional", "doce", "vegana"]
+TIPOS_PIZZA = ["tradicional", "doce", "vegana", "vegetariana", "especial", "gourmet", "integral", "sem gluten"]
 
 
 # FUNÇÕES DE PERSISTÊNCIA
