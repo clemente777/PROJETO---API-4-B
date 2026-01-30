@@ -2,22 +2,24 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Pizzaria dos Manos</title>
-
+<title>Pizzaria dos manos</title>
 <style>
 :root{
-    --primary:#11411c;
-    --primary-dark:#fa0f23;
+    --primary:#ff6b35;        /* laranja */
+    --primary-dark:#e63946;   /* vermelho claro */
+    --bg:#fff5f0;
     --card:#ffffff;
     --text:#2b2b2b;
     --muted:#6b7280;
     --success:#22c55e;
     --warning:#f59e0b;
     --danger:#ef4444;
-    --shadow:0 18px 40px rgba(0,0,0,.25);
+    --shadow:0 14px 35px rgba(0,0,0,.12);
 }
 
-*{ box-sizing:border-box; }
+*{
+    box-sizing:border-box;
+}
 
 body{
     margin:0;
@@ -26,86 +28,61 @@ body{
     color:var(--text);
 }
 
-/* ===== HEADER LIMPO ===== */
+/* HEADER */
 header{
-    padding:40px 20px;
-    display:flex;
-    justify-content:center;
+    background:linear-gradient(135deg,var(--primary),var(--primary-dark));
+    padding:50px 20px;
+    text-align:center;
+    box-shadow:0 20px 45px rgba(0,0,0,.25);
 }
 
-/* ===== BLOCO CENTRAL COM FUNDO LARANJA ===== */
-.header-box{
-    background:linear-gradient(360deg,var(--primary),var(--primary-dark));
-    display:flex;
-    align-items:center;
-    gap:40px;
-    padding:30px 50px;
-    border-radius:32px;
-    box-shadow:var(--shadow);
-}
-
-/* LOGO GRANDE */
-.logo{
-    width:500px;
-    height:auto;
-    border-radius:22px;
-    background:white;
-    padding:12px;
-    box-shadow:0 12px 30px rgba(0,0,0,.35);
-}
-
-/* TÍTULO */
-.header-text h1{
+header h1{
     margin:0;
-    font-size:3.6rem;
-    font-weight:900;
-    color:#fff;
+    font-size:2.8rem;
+    font-weight:700;
     letter-spacing:1px;
-    text-shadow:3px 3px 8px rgba(0,0,0,.35);
-    line-height:1.1;
 }
 
-.header-text span{
-    display:block;
-    font-size:1.15rem;
-    font-weight:500;
-    opacity:.9;
-    margin-top:10px;
-    color:#fff;
-}
-
-/* ===== CONTAINER ===== */
+/* CONTAINER (bug corrigido) */
 .container{
     width:90%;
     max-width:1100px;
-    margin:50px auto;
+    margin:40px auto;
 }
 
 /* FORM */
 form{
     background:var(--card);
-    padding:32px;
-    border-radius:24px;
-    box-shadow:0 14px 35px rgba(0,0,0,.15);
+    padding:30px;
+    border-radius:22px;
+    box-shadow:var(--shadow);
     margin-bottom:40px;
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
     gap:18px;
 }
 
-form input, form select{
+form input,
+form select{
     padding:14px 16px;
     border-radius:14px;
     border:1px solid #e5e7eb;
     font-size:1rem;
 }
 
+form input:focus,
+form select:focus{
+    outline:none;
+    border-color:var(--primary);
+    box-shadow:0 0 0 4px rgba(255,107,53,.18);
+}
+
 form button{
     grid-column:1/-1;
     padding:16px;
-    border-radius:18px;
+    border-radius:16px;
     font-size:1.1rem;
-    font-weight:700;
+    font-weight:600;
 }
 
 /* BOTÕES */
@@ -114,7 +91,7 @@ button{
     cursor:pointer;
     background:var(--primary);
     color:white;
-    transition:.25s;
+    transition:.25s ease;
 }
 
 button:hover{
@@ -123,88 +100,125 @@ button:hover{
 }
 
 /* FEEDBACK */
-.loading{ color:var(--primary-dark); font-weight:600; }
-.erro{ background:#ffe4e6; color:var(--danger); padding:14px; border-radius:14px; }
-.sucesso{ background:#dcfce7; color:var(--success); padding:14px; border-radius:14px; }
+.loading{
+    font-weight:600;
+    font-size:1.05rem;
+    color:var(--primary-dark);
+}
+
+.erro{
+    background:#ffe4e6;
+    color:var(--danger);
+    padding:14px;
+    border-radius:14px;
+    margin-bottom:15px;
+    font-size:1rem;
+}
+
+.sucesso{
+    background:#dcfce7;
+    color:var(--success);
+    padding:14px;
+    border-radius:14px;
+    margin-bottom:15px;
+    font-size:1rem;
+}
+
+/* FILTRO */
+.filtros{
+    margin-bottom:30px;
+}
+
+.filtros select{
+    padding:14px;
+    border-radius:14px;
+    border:1px solid #e5e7eb;
+    font-size:1rem;
+}
 
 /* LISTA */
 #lista{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-    gap:26px;
+    gap:24px;
 }
 
+/* CARD */
 .card{
     background:var(--card);
-    padding:26px;
-    border-radius:26px;
-    box-shadow:0 14px 35px rgba(0,0,0,.15);
-    transition:.25s;
+    padding:24px;
+    border-radius:24px;
+    box-shadow:var(--shadow);
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    transition:.25s ease;
 }
 
 .card:hover{
-    transform:translateY(-4px);
+    transform:translateY(-6px);
 }
 
-.card h3{ 
-    margin:0; 
-    color:var(--primary-dark); 
-    font-size:1.4rem;
+.card h3{
+    margin:0;
+    font-size:1.35rem;
+    font-weight:700;
+    color:var(--primary-dark);
 }
 
-.card p{ 
-    margin:6px 0; 
-    color:var(--muted); 
+.card p{
+    margin:8px 0;
+    font-size:1rem;
+    color:var(--muted);
 }
 
+/* BOTÕES DO CARD */
 .card button{
-    margin-top:12px;
+    margin-top:14px;
     padding:12px;
     border-radius:14px;
-    font-size:.95rem;
+    font-size:0.95rem;
+    font-weight:500;
 }
 
-.card button:nth-of-type(1){ background:#1e8538; }
-.card button:nth-of-type(2){ background:var(--danger); }
-.card button:nth-of-type(3){ background:var(--warning); color:#1f2933; }
+.card button:nth-of-type(1){
+    background:#fb923c;
+}
 
-/* ===== RESPONSIVO ===== */
-@media(max-width:900px){
-    .header-box{
-        flex-direction:column;
-        text-align:center;
-        padding:30px;
-    }
+.card button:nth-of-type(2){
+    background:var(--danger);
+}
 
-    .logo{
-        width:320px;
-    }
+.card button:nth-of-type(3){
+    background:var(--warning);
+    color:#1f2933;
+}
 
-    .header-text h1{
-        font-size:2.8rem;
+/* RESPONSIVO */
+@media(max-width:600px){
+    header h1{
+        font-size:2.2rem;
     }
 }
 </style>
+
+
 </head>
 
 <body>
 
 <header>
-    <div class="header-box">
-        <img src="./manos.png" class="logo" alt="Pizzaria dos Manos">
-        <div class="header-text">
-            <h1>Pizzaria dos Manos</h1>
-            <span>Sabor artesanal • Qualidade de verdade</span>
-        </div>
-    </div>
+    <h1>Pizzaria dos Manos</h1>
 </header>
 
 <div class="container">
 
+    <!-- FEEDBACK -->
     <div class="loading" id="loading" style="display:none">Carregando...</div>
     <div class="erro" id="erro"></div>
     <div class="sucesso" id="sucesso"></div>
 
+    <!-- FORMULÁRIO -->
     <form id="form">
         <input type="hidden" id="id">
 
@@ -217,11 +231,37 @@ button:hover{
             <option value="indisponivel">Indisponível</option>
             <option value="promocao">Promoção</option>
         </select>
+        
+        <select id="tipo">
+                <option value="tradicional">Tradicional</option>
+                <option value="doce">Doce</option>
+                <option value="vegana">Vegana</option>
+                <option value="vegetariana">Vegetariana</option>
+                <option value="especial">Especial</option>
+                <option value="gourmet">Gourmet</option>
+                <option value="integral">Integral</option>
+                <option value="sem_gluten">Sem Glúten</option>
+        </select>
 
+
+        
+        
         <button type="submit">Salvar</button>
     </form>
 
+    <!-- FILTROS -->
+    <div class="filtros">
+        <select id="filtroStatus" onchange="listar()">
+            <option value="">Todos os status</option>
+            <option value="disponivel">Disponível</option>
+            <option value="indisponivel">Indisponível</option>
+            <option value="promocao">Promoção</option>
+        </select>
+    </div>
+
+    <!-- LISTA -->
     <div id="lista"></div>
+
 </div>
 
 <script>
@@ -238,31 +278,148 @@ const nomeInput = document.getElementById("nome");
 const valorInput = document.getElementById("valor");
 const descInput = document.getElementById("descricao");
 const statusInput = document.getElementById("status");
+const tipoInput = document.getElementById("tipo");
+const filtroStatus = document.getElementById("filtroStatus");
 
-async function listar(){
-    loading.style.display="block";
-    lista.innerHTML="";
-    try{
+// LISTAR PIZZAS
+async function listar() {
+    loading.style.display = "block";
+    erro.innerText = "";
+    lista.innerHTML = "";
+
+    try {
         const res = await fetch(API);
-        const dados = await res.json();
-        dados.forEach(p=>{
+        if (!res.ok) throw new Error();
+
+        let dados = await res.json();
+
+        // filtro por status
+        if (filtroStatus.value) {
+            dados = dados.filter(p => p.status === filtroStatus.value);
+        }
+
+        dados.forEach(p => {
             lista.innerHTML += `
             <div class="card">
                 <h3>${p.nome}</h3>
                 <p>${p.descricao}</p>
-                <p>💰 R$ ${p.valor.toFixed(2)}</p>
+                <p>💰 R$ ${p.valor}</p>
+                <p>Tipo: ${p.tipo}</p>
                 <p>Status: ${p.status}</p>
+
                 <button onclick="editar(${p.id})">Editar</button>
                 <button onclick="remover(${p.id})">Remover</button>
                 <button onclick="mudarStatus(${p.id})">Mudar status</button>
             </div>`;
         });
-    }catch{
-        erro.innerText="Erro ao carregar pizzas";
+
+    } catch {
+        erro.innerText = "Erro ao carregar dados da API.";
     }
-    loading.style.display="none";
+
+    loading.style.display = "none";
 }
 
+// SALVAR (POST / PUT)
+form.onsubmit = async e => {
+    e.preventDefault();
+    erro.innerText = "";
+    sucesso.innerText = "";
+
+    const pizza = {
+        nome: nomeInput.value,
+        valor: Number(valorInput.value),
+        descricao: descInput.value,
+        status: statusInput.value,
+        tipo: tipoInput.value
+    };
+
+    const id = idInput.value;
+    const metodo = id ? "PUT" : "POST";
+    const url = id ? `${API}/${id}` : API;
+
+    try {
+        const res = await fetch(url, {
+            method: metodo,
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(pizza)
+        });
+
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.erro);
+
+        sucesso.innerText = " Item salvo com sucesso!";
+        form.reset();
+        idInput.value = "";
+        listar();
+
+    } catch (e) {
+        erro.innerText = "erro " + e.message;
+    }
+};
+
+// EDITAR
+async function editar(id) {
+    const res = await fetch(API);
+    const pizzas = await res.json();
+    const p = pizzas.find(p => p.id === id);
+
+    idInput.value = p.id;
+    nomeInput.value = p.nome;
+    valorInput.value = p.valor;
+    descInput.value = p.descricao;
+    statusInput.value = p.status;
+    tipoInput.value = p.tipo;
+}
+
+// REMOVER
+async function remover(id) {
+    if (!confirm("Deseja remover?")) return;
+
+    try {
+        const res = await fetch(`${API}/${id}`, { method: "DELETE" });
+        if (!res.ok) throw new Error();
+
+        sucesso.innerText = " Pizza removida!";
+        listar();
+
+    } catch {
+        erro.innerText = " Erro ao remover pizza.";
+    }
+}
+
+async function mudarStatus(id) {
+    erro.innerText = "";
+    sucesso.innerText = "";
+
+    try {
+        const res = await fetch(API);
+        const pizzas = await res.json();
+        const p = pizzas.find(p => p.id === id);
+
+        const novoStatus =
+            p.status === "disponivel" ? "indisponivel" : "disponivel";
+
+        const resp = await fetch(`${API}/${id}/status`, {
+            method: "PATCH",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ status: novoStatus })
+        });
+
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.erro);
+
+        sucesso.innerText = " Status atualizado!";
+        listar();
+
+    } catch (e) {
+        erro.innerText = " Erro ao alterar status.";
+    }
+}
+
+
+
+// INICIAL
 listar();
 </script>
 
