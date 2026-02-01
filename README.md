@@ -218,8 +218,6 @@ Ao cadastrar ou editar uma pizza, o backend valida os dados enviados. As regras 
   - Obrigatório
   - Deve ter **no mínimo 3 caracteres**
 
-- **Descrição**
-  - Obrigatória
 
 - **Valor**
   - Deve ser numérico
