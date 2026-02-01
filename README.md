@@ -1,4 +1,4 @@
-# PIZZARIA DOS MANOS
+![imagem](gif/manos.png)
 
 Este projeto é uma aplicação **Full Stack** para gerenciar um **cardápio de pizzas**, permitindo cadastrar, listar, editar, remover e alterar o status das pizzas.
 
@@ -147,7 +147,7 @@ POST /pizzas - Cadastra uma nova pizza
 
 ### PUT /pizzas/:id
 ```bash
-PATCH /pizzas/:id/status - Atualiza nome, descricao, tipo e valor de uma pizza pelo ID.
+PATCH /pizzas/:id/status - Atualiza nome, descricao, tipo, e valor de uma pizza pelo ID.
 ```
 - request
 ```bash
@@ -286,4 +286,4 @@ Ao cadastrar ou editar uma pizza, o backend valida os dados enviados. As regras 
 ```
 ## Demonstração do Sistema
 
-![Sistema funcionando](gif/pizzaria.gif)
+![Sistema funcionando](gif/pizza.gif)

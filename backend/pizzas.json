@@ -4,7 +4,7 @@
         "nome": "nuttela com mms",
         "descricao": "docura extrema",
         "valor": 55,
-        "status": "disponivel",
+        "status": "promocao",
         "tipo": "doce"
     },
     {
@@ -12,7 +12,7 @@
         "nome": "portuguesa",
         "descricao": "apetitosa",
         "valor": 55,
-        "status": "disponivel",
+        "status": "promocao",
         "tipo": "tradicional"
     },
     {

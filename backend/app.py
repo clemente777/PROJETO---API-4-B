@@ -134,18 +134,6 @@ def editar_pizza(id):
             # Validações
             if not nome or len(nome) < 3:
                 return jsonify({"erro": "Nome deve ter no mínimo 3 caracteres"}), 400
-
-            if nova_pizza.get("status") not in STATUS_VALIDOS:
-                return jsonify({
-                    "erro": "Status inválido",
-                    "status_validos": STATUS_VALIDOS
-                }), 400
-
-            if nova_pizza.get("tipo") not in TIPOS_PIZZA:
-                return jsonify({
-                    "erro": "Tipo de pizza inválido",
-                    "tipos_validos": TIPOS_PIZZA
-                }), 400
             
 
             if not isinstance(valor, (int, float)) or valor <= 0:
