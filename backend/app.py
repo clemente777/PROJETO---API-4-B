@@ -16,7 +16,7 @@ NOME_ARQUIVO = 'pizzas.json'
 STATUS_VALIDOS = ["disponivel", "indisponivel", "promocao"]
 
 # Tipos de pizzas permitidos no sistema
-TIPOS_PIZZA = ["tradicional", "doce", "vegana"]
+TIPOS_PIZZA = ["tradicional", "doce", "vegana","vegetariana","especial", "gourmet"]
 
 
 # FUNÇÕES DE PERSISTÊNCIA
@@ -68,9 +68,6 @@ def adicionar_pizza():
     if not nova_pizza.get("nome") or len(nova_pizza["nome"]) < 3:
         return jsonify({"erro": "Nome deve ter no mínimo 3 caracteres"}), 400
 
-    # Validação da descrição
-    if not nova_pizza.get("descricao"):
-        return jsonify({"erro": "Descrição é obrigatória"}), 400
 
     # Validação do valor (não pode ser zero ou negativo)
     if not isinstance(nova_pizza.get("valor"), (int, float)) or nova_pizza["valor"] <= 0:
@@ -138,8 +135,17 @@ def editar_pizza(id):
             if not nome or len(nome) < 3:
                 return jsonify({"erro": "Nome deve ter no mínimo 3 caracteres"}), 400
 
-            if not descricao:
-                return jsonify({"erro": "Descrição é obrigatória"}), 400
+            if nova_pizza.get("status") not in STATUS_VALIDOS:
+                return jsonify({
+                    "erro": "Status inválido",
+                    "status_validos": STATUS_VALIDOS
+                }), 400
+
+            if nova_pizza.get("tipo") not in TIPOS_PIZZA:
+                return jsonify({
+                    "erro": "Tipo de pizza inválido",
+                    "tipos_validos": TIPOS_PIZZA
+                }), 400
             
 
             if not isinstance(valor, (int, float)) or valor <= 0:

@@ -80,30 +80,36 @@ endpoints da API
 ```bash
 GET /pizzas - Lista todas as pizzas cadastradas.
 ```
-
+- response
 ```bash
 [
-    {
-        "id": 1,
-        "nome": "carne na nata",
-        "descricao": "sequinha",
-        "valor": 50,
-        "status": "disponivel"
-    },
-    {
-        "id": 2,
-        "nome": "carne de boi",
-        "descricao": "boazinha",
-        "valor": 35,
-        "status": "disponivel"
-    },
-    {
-        "id": 3,
-        "nome": "carne de porco",
-        "descricao": "chiqueiro",
-        "valor": 20,
-        "status": "promocao"
-    }
+  [
+  {
+    "id": 1,
+    "nome": "nuttela com mms",
+    "descricao": "docura extrema",
+    "valor": 55,
+    "status": "disponivel",
+    "tipo": "doce"
+  },
+  {
+    "id": 2,
+    "nome": "portuguesa",
+    "descricao": "apetitosa",
+    "valor": 55,
+    "status": "disponivel",
+    "tipo": "tradicional"
+  },
+  {
+    "id": 3,
+    "nome": "lagartaso",
+    "descricao": "lagarto na brasa",
+    "valor": 100,
+    "status": "indisponivel",
+    "tipo": "especial"
+  }
+]
+
 ]
 ```
 
@@ -116,10 +122,11 @@ POST /pizzas - Cadastra uma nova pizza
 ```bash
 [
     {
-        "nome": "carne de porco",
-        "descricao": "chiqueiro",
-        "valor": 20,
-        "status": "promocao"
+        "nome": "nuttela com mms",
+        "descricao": "docura extrema",
+        "valor": 55,
+        "status": "disponivel",
+        "tipo": "doce"
     }
 ]
 ```
@@ -127,11 +134,12 @@ POST /pizzas - Cadastra uma nova pizza
 ```bash
 [
     {
-        "id": 3,
-        "nome": "carne de porco",
-        "descricao": "chiqueiro",
-        "valor": 20,
-        "status": "promocao"
+        "id": 1,
+        "nome": "nuttela com mms",
+        "descricao": "docura extrema",
+        "valor": 55,
+        "status": "disponivel",
+        "tipo": "doce"
     }
 ]
 ```
@@ -139,15 +147,16 @@ POST /pizzas - Cadastra uma nova pizza
 
 ### PUT /pizzas/:id
 ```bash
-PATCH /pizzas/:id/status - Atualiza nome, descricao e valor de uma pizza pelo ID.
+PATCH /pizzas/:id/status - Atualiza nome, descricao, tipo e valor de uma pizza pelo ID.
 ```
 - request
 ```bash
 [
     {
-        "nome": "carne de ave",
-        "descricao": "frango voador",
-        "valor": 60,
+      "nome": "lagartaso",
+      "descricao": "horrivel",
+      "valor": 10,
+      "tipo": "especial"
     }
 ]
 ```
@@ -156,10 +165,11 @@ PATCH /pizzas/:id/status - Atualiza nome, descricao e valor de uma pizza pelo ID
 [
     {
         "id":3
-        "nome": "carne de ave",
-        "descricao": "frango voador",
-        "valor": 60,
-        "status": "promocao"
+        "nome": "largataso",
+        "descricao": "horrivel",
+        "valor": 10,
+        "status": "indisponivel"
+        "tipo": "tradicional"
     }
 ]
 ```
@@ -179,11 +189,12 @@ PATCH /pizzas/:id/status - Altera apenas o status da pizza.
 ```bash
 [
     {
-        "id":3
-        "nome": "carne de ave",
-        "descricao": "frango voador",
-        "valor": 60,
-        "status": "indisponivel"
+        "id": 1,
+        "nome": "nuttela com mms",
+        "descricao": "docura extrema",
+        "valor": 55,
+        "status": "indisponivel",
+        "tipo": "doce"
     }
 ]
 ```
@@ -231,13 +242,13 @@ Ao cadastrar ou editar uma pizza, o backend valida os dados enviados. As regras 
 }
 ```
 
-2. **Descrição vazia**
+2. **Nenhum corpo é enviado na requisição**
 ```bash
 {
-  "erro": "Descrição é obrigatória"
+  "erro": "JSON inválido"}
 }
-
 ```
+
 3. **Valor inválido:**
 ```bash
 {
@@ -252,8 +263,27 @@ Ao cadastrar ou editar uma pizza, o backend valida os dados enviados. As regras 
   "status_validos": '["disponivel", "indisponivel", "promocao"]'
 }
 ```
+5. **tipo de pizza inválido:**
+```bash
+{
+  "erro": "Tipo de pizza inválido",
+  "tipos_validos": '["tradicional", "doce", "vegana", "vegetariana", "especial", "gourmet"]'
+}
+```
+6. **. Status não enviado:**
+```bash
+{
+  "erro": "Status é obrigatório"
+}
+```
+>Recurso inexistente → 404
+**Pizza não encontrada (ID inexistente)**
+```bash
+{
+  "erro": "Pizza não encontrada"
+}
+
+```
 ## Demonstração do Sistema
 
 ![Sistema funcionando](gif/pizzaria.gif)
-
-## Contribuidores 🍕

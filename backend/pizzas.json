@@ -1,39 +1,50 @@
 [
     {
         "id": 1,
-        "nome": "carne na nata",
-        "descricao": "sequinha",
-        "valor": 50,
-        "status": "disponivel"
+        "nome": "nuttela com mms",
+        "descricao": "docura extrema",
+        "valor": 55,
+        "status": "disponivel",
+        "tipo": "doce"
     },
     {
         "id": 2,
-        "nome": "carne de boi",
-        "descricao": "boazinha",
-        "valor": 35,
-        "status": "disponivel"
-    },
-    {
-        "id": 3,
-        "nome": "carne de porco",
-        "descricao": "chiqueiro",
-        "valor": 20,
-        "status": "disponivel"
-    },
-    {
-        "id": 4,
-        "nome": "qdqdsad",
-        "descricao": "sadasd",
-        "valor": 33,
-        "status": "indisponivel",
+        "nome": "portuguesa",
+        "descricao": "apetitosa",
+        "valor": 55,
+        "status": "disponivel",
         "tipo": "tradicional"
     },
     {
+        "id": 3,
+        "nome": "lagartaso",
+        "descricao": "lagarto na brasa",
+        "valor": 100,
+        "status": "promocao",
+        "tipo": "especial"
+    },
+    {
+        "id": 4,
+        "nome": "brocolis com azeite",
+        "descricao": "verdes fortes",
+        "valor": 55,
+        "status": "disponivel",
+        "tipo": "vegetariana"
+    },
+    {
         "id": 5,
-        "nome": "carne de sol",
-        "descricao": "d",
-        "valor": 33,
-        "status": "indisponivel",
-        "tipo": "doce"
+        "nome": "quatro queijos",
+        "descricao": "muito queijo",
+        "valor": 55,
+        "status": "disponivel",
+        "tipo": "vegana"
+    },
+    {
+        "id": 6,
+        "nome": "escorpiao cozido",
+        "descricao": "veneno pra cavalo",
+        "valor": 100,
+        "status": "disponivel",
+        "tipo": "gourmet"
     }
 ]

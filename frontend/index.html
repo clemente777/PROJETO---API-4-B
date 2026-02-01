@@ -2,55 +2,67 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Pizzaria dos manos</title>
+<title>Pizzaria dos Manos</title>
+
 <style>
 :root{
-    --primary:#ff6b35;        /* laranja */
-    --primary-dark:#e63946;   /* vermelho claro */
-    --bg:#fff5f0;
+    --primary:#ff6b35;
+    --primary-dark:#e63946;
     --card:#ffffff;
     --text:#2b2b2b;
-    --muted:#6b7280;
     --success:#22c55e;
     --warning:#f59e0b;
     --danger:#ef4444;
     --shadow:0 14px 35px rgba(0,0,0,.12);
 }
 
-*{
-    box-sizing:border-box;
-}
+*{ box-sizing:border-box; }
 
 body{
     margin:0;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-family: system-ui, Arial;
     background:linear-gradient(180deg,#fff7f3,#fff0e8);
     color:var(--text);
 }
 
-/* HEADER */
 header{
     background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-    padding:50px 20px;
+    padding:50px;
     text-align:center;
-    box-shadow:0 20px 45px rgba(0,0,0,.25);
+    color:white;
 }
 
-header h1{
-    margin:0;
-    font-size:2.8rem;
-    font-weight:700;
-    letter-spacing:1px;
-}
-
-/* CONTAINER (bug corrigido) */
 .container{
     width:90%;
     max-width:1100px;
     margin:40px auto;
 }
 
-/* FORM */
+.loading{
+    display:none;
+    font-weight:600;
+    margin-bottom:15px;
+    color:var(--primary-dark);
+}
+
+.erro{
+    display:none;
+    background:#ffe4e6;
+    color:var(--danger);
+    padding:14px;
+    border-radius:14px;
+    margin-bottom:15px;
+}
+
+.sucesso{
+    display:none;
+    background:#dcfce7;
+    color:var(--success);
+    padding:14px;
+    border-radius:14px;
+    margin-bottom:15px;
+}
+
 form{
     background:var(--card);
     padding:30px;
@@ -58,151 +70,67 @@ form{
     box-shadow:var(--shadow);
     margin-bottom:40px;
     display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
     gap:18px;
 }
 
-form input,
-form select{
-    padding:14px 16px;
+form input, form select{
+    padding:14px;
     border-radius:14px;
     border:1px solid #e5e7eb;
-    font-size:1rem;
-}
-
-form input:focus,
-form select:focus{
-    outline:none;
-    border-color:var(--primary);
-    box-shadow:0 0 0 4px rgba(255,107,53,.18);
 }
 
 form button{
     grid-column:1/-1;
     padding:16px;
     border-radius:16px;
-    font-size:1.1rem;
-    font-weight:600;
-}
-
-/* BOTÕES */
-button{
-    border:none;
-    cursor:pointer;
     background:var(--primary);
     color:white;
-    transition:.25s ease;
+    border:none;
+    font-size:1.1rem;
 }
 
-button:hover{
-    background:var(--primary-dark);
-    transform:translateY(-2px);
-}
-
-/* FEEDBACK */
-.loading{
-    font-weight:600;
-    font-size:1.05rem;
-    color:var(--primary-dark);
-}
-
-.erro{
-    background:#ffe4e6;
-    color:var(--danger);
-    padding:14px;
-    border-radius:14px;
-    margin-bottom:15px;
-    font-size:1rem;
-}
-
-.sucesso{
-    background:#dcfce7;
-    color:var(--success);
-    padding:14px;
-    border-radius:14px;
-    margin-bottom:15px;
-    font-size:1rem;
-}
-
-/* FILTRO */
 .filtros{
+    display:flex;
+    gap:16px;
     margin-bottom:30px;
+    flex-wrap:wrap;
 }
 
 .filtros select{
     padding:14px;
     border-radius:14px;
     border:1px solid #e5e7eb;
-    font-size:1rem;
 }
 
-/* LISTA */
 #lista{
     display:grid;
     grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
     gap:24px;
 }
 
-/* CARD */
 .card{
     background:var(--card);
     padding:24px;
     border-radius:24px;
     box-shadow:var(--shadow);
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    transition:.25s ease;
 }
 
-.card:hover{
-    transform:translateY(-6px);
-}
+.card h3{ color:var(--primary-dark); margin:0; }
 
-.card h3{
-    margin:0;
-    font-size:1.35rem;
-    font-weight:700;
-    color:var(--primary-dark);
-}
-
-.card p{
-    margin:8px 0;
-    font-size:1rem;
-    color:var(--muted);
-}
-
-/* BOTÕES DO CARD */
 .card button{
-    margin-top:14px;
+    margin-top:12px;
     padding:12px;
     border-radius:14px;
-    font-size:0.95rem;
-    font-weight:500;
+    border:none;
+    cursor:pointer;
+    color:white;
 }
 
-.card button:nth-of-type(1){
-    background:#fb923c;
-}
-
-.card button:nth-of-type(2){
-    background:var(--danger);
-}
-
-.card button:nth-of-type(3){
-    background:var(--warning);
-    color:#1f2933;
-}
-
-/* RESPONSIVO */
-@media(max-width:600px){
-    header h1{
-        font-size:2.2rem;
-    }
-}
+.card button:nth-of-type(1){ background:#fb923c; }
+.card button:nth-of-type(2){ background:var(--danger); }
+.card button:nth-of-type(3){ background:var(--warning); color:#000; }
 </style>
-
-
 </head>
 
 <body>
@@ -213,92 +141,95 @@ button:hover{
 
 <div class="container">
 
-    <!-- FEEDBACK -->
-    <div class="loading" id="loading" style="display:none">Carregando...</div>
-    <div class="erro" id="erro"></div>
-    <div class="sucesso" id="sucesso"></div>
+<div id="loading" class="loading">Carregando pizzas...</div>
+<div id="erro" class="erro"></div>
+<div id="sucesso" class="sucesso"></div>
 
-    <!-- FORMULÁRIO -->
-    <form id="form">
-        <input type="hidden" id="id">
+<form id="form">
+    <input type="hidden" id="id">
+    <input id="nome" placeholder="Nome da pizza">
+    <input id="valor" type="number" placeholder="Valor">
+    <input id="descricao" placeholder="Descrição">
 
-        <input type="text" id="nome" placeholder="Nome da pizza" required>
-        <input type="number" id="valor" placeholder="Valor (R$)" required>
-        <input type="text" id="descricao" placeholder="Descrição" required>
+    <select id="status">
+        <option value="disponivel">Disponível</option>
+        <option value="indisponivel">Indisponível</option>
+        <option value="promocao">Promoção</option>
+    </select>
 
-        <select id="status">
-            <option value="disponivel">Disponível</option>
-            <option value="indisponivel">Indisponível</option>
-            <option value="promocao">Promoção</option>
-        </select>
-        
-        <select id="tipo">
-                <option value="tradicional">Tradicional</option>
-                <option value="doce">Doce</option>
-                <option value="vegana">Vegana</option>
-                <option value="vegetariana">Vegetariana</option>
-                <option value="especial">Especial</option>
-                <option value="gourmet">Gourmet</option>
-                <option value="integral">Integral</option>
-                <option value="sem_gluten">Sem Glúten</option>
-        </select>
+    <select id="tipo">
+        <option value="tradicional">Tradicional</option>
+        <option value="doce">Doce</option>
+        <option value="vegana">Vegana</option>
+        <option value="vegetariana">Vegetariana</option>
+        <option value="especial">Especial</option>
+        <option value="gourmet">Gourmet</option>
+    </select>
 
+    <button type="submit">Salvar</button>
+</form>
 
-        
-        
-        <button type="submit">Salvar</button>
-    </form>
+<div class="filtros">
+    <select id="filtroStatus" onchange="listar()">
+        <option value="">Todos os status</option>
+        <option value="disponivel">Disponível</option>
+        <option value="indisponivel">Indisponível</option>
+        <option value="promocao">Promoção</option>
+    </select>
 
-    <!-- FILTROS -->
-    <div class="filtros">
-        <select id="filtroStatus" onchange="listar()">
-            <option value="">Todos os status</option>
-            <option value="disponivel">Disponível</option>
-            <option value="indisponivel">Indisponível</option>
-            <option value="promocao">Promoção</option>
-        </select>
-    </div>
+    <select id="filtroTipo" onchange="listar()">
+        <option value="">Todos os tipos</option>
+        <option value="tradicional">Tradicional</option>
+        <option value="doce">Doce</option>
+        <option value="vegana">Vegana</option>
+        <option value="vegetariana">Vegetariana</option>
+        <option value="especial">Especial</option>
+        <option value="gourmet">Gourmet</option>
+    </select>
+</div>
 
-    <!-- LISTA -->
-    <div id="lista"></div>
-
+<div id="lista"></div>
 </div>
 
 <script>
 const API = "http://localhost:5000/pizzas";
 
-const loading = document.getElementById("loading");
 const erro = document.getElementById("erro");
 const sucesso = document.getElementById("sucesso");
+const loading = document.getElementById("loading");
 const lista = document.getElementById("lista");
 
-const form = document.getElementById("form");
 const idInput = document.getElementById("id");
 const nomeInput = document.getElementById("nome");
 const valorInput = document.getElementById("valor");
 const descInput = document.getElementById("descricao");
 const statusInput = document.getElementById("status");
 const tipoInput = document.getElementById("tipo");
-const filtroStatus = document.getElementById("filtroStatus");
 
-// LISTAR PIZZAS
-async function listar() {
+const filtroStatus = document.getElementById("filtroStatus");
+const filtroTipo = document.getElementById("filtroTipo");
+
+function limparMensagens(){
+    erro.style.display = "none";
+    sucesso.style.display = "none";
+}
+
+async function listar(){
+    limparMensagens();
     loading.style.display = "block";
-    erro.innerText = "";
     lista.innerHTML = "";
 
-    try {
+    try{
         const res = await fetch(API);
-        if (!res.ok) throw new Error();
+        if(!res.ok) throw new Error();
+        let pizzas = await res.json();
 
-        let dados = await res.json();
+        if (filtroStatus.value)
+            pizzas = pizzas.filter(p => p.status === filtroStatus.value);
+        if (filtroTipo.value)
+            pizzas = pizzas.filter(p => p.tipo === filtroTipo.value);
 
-        // filtro por status
-        if (filtroStatus.value) {
-            dados = dados.filter(p => p.status === filtroStatus.value);
-        }
-
-        dados.forEach(p => {
+        pizzas.forEach(p => {
             lista.innerHTML += `
             <div class="card">
                 <h3>${p.nome}</h3>
@@ -306,64 +237,72 @@ async function listar() {
                 <p>💰 R$ ${p.valor}</p>
                 <p>Tipo: ${p.tipo}</p>
                 <p>Status: ${p.status}</p>
-
                 <button onclick="editar(${p.id})">Editar</button>
                 <button onclick="remover(${p.id})">Remover</button>
                 <button onclick="mudarStatus(${p.id})">Mudar status</button>
             </div>`;
         });
-
-    } catch {
-        erro.innerText = "Erro ao carregar dados da API.";
+    }catch{
+        erro.style.display = "block";
+        erro.innerText = "Erro ao carregar a API";
+    }finally{
+        loading.style.display = "none";
     }
-
-    loading.style.display = "none";
 }
 
-// SALVAR (POST / PUT)
 form.onsubmit = async e => {
     e.preventDefault();
-    erro.innerText = "";
-    sucesso.innerText = "";
+    limparMensagens();
 
     const pizza = {
-        nome: nomeInput.value,
+        nome: nomeInput.value.trim(),
+        descricao: descInput.value.trim(),
         valor: Number(valorInput.value),
-        descricao: descInput.value,
         status: statusInput.value,
         tipo: tipoInput.value
     };
 
-    const id = idInput.value;
-    const metodo = id ? "PUT" : "POST";
-    const url = id ? `${API}/${id}` : API;
+    if (pizza.nome.length < 3)
+        return erroMsg("Nome deve ter no mínimo 3 caracteres");
+    if (!pizza.descricao)
+        return erroMsg("Descrição é obrigatória");
+    if (pizza.valor <= 0)
+        return erroMsg("Valor deve ser maior que zero");
 
-    try {
-        const res = await fetch(url, {
-            method: metodo,
-            headers: {"Content-Type": "application/json"},
+    try{
+        const res = await fetch(idInput.value ? `${API}/${idInput.value}` : API,{
+            method: idInput.value ? "PUT" : "POST",
+            headers:{ "Content-Type":"application/json" },
             body: JSON.stringify(pizza)
         });
 
         const data = await res.json();
-        if (!res.ok) throw new Error(data.erro);
+        if(!res.ok) return erroMsg(data.erro);
 
-        sucesso.innerText = " Item salvo com sucesso!";
-        form.reset();
-        idInput.value = "";
+        sucesso.style.display = "block";
+    sucesso.innerText = "Pizza salva com sucesso!";
+
+    form.reset();
+    idInput.value = "";
+
+    setTimeout(() => {
         listar();
+}, 1500);
 
-    } catch (e) {
-        erro.innerText = "erro " + e.message;
+    }catch{
+        erroMsg("Erro ao conectar com a API");
     }
 };
 
-// EDITAR
-async function editar(id) {
+function erroMsg(msg){
+    erro.style.display = "block";
+    erro.innerText = msg;
+}
+
+async function editar(id){
     const res = await fetch(API);
     const pizzas = await res.json();
     const p = pizzas.find(p => p.id === id);
-
     idInput.value = p.id;
     nomeInput.value = p.nome;
     valorInput.value = p.valor;
@@ -372,54 +311,55 @@ async function editar(id) {
     tipoInput.value = p.tipo;
 }
 
-// REMOVER
-async function remover(id) {
+
+async function remover(id){
     if (!confirm("Deseja remover?")) return;
 
-    try {
-        const res = await fetch(`${API}/${id}`, { method: "DELETE" });
-        if (!res.ok) throw new Error();
+    erro.style.display = "none";
+    sucesso.style.display = "none";
 
-        sucesso.innerText = " Pizza removida!";
-        listar();
+    try{
+        const res = await fetch(`${API}/${id}`, { method: "DELETE" });
+        const data = await res.json();
+
+        if (!res.ok) {
+            erro.style.display = "block";
+            erro.innerText = data.erro || "Erro ao remover pizza";
+            return;
+        }
+
+        sucesso.style.display = "block";
+        sucesso.innerText = " Pizza removida com sucesso!";
+
+        setTimeout(() => {
+            listar();
+        }, 1500);
 
     } catch {
-        erro.innerText = " Erro ao remover pizza.";
-    }
-}
-
-async function mudarStatus(id) {
-    erro.innerText = "";
-    sucesso.innerText = "";
-
-    try {
-        const res = await fetch(API);
-        const pizzas = await res.json();
-        const p = pizzas.find(p => p.id === id);
-
-        const novoStatus =
-            p.status === "disponivel" ? "indisponivel" : "disponivel";
-
-        const resp = await fetch(`${API}/${id}/status`, {
-            method: "PATCH",
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify({ status: novoStatus })
-        });
-
-        const data = await resp.json();
-        if (!resp.ok) throw new Error(data.erro);
-
-        sucesso.innerText = " Status atualizado!";
-        listar();
-
-    } catch (e) {
-        erro.innerText = " Erro ao alterar status.";
+        erro.style.display = "block";
+        erro.innerText = "Erro ao conectar com a API";
     }
 }
 
 
+async function mudarStatus(id){
+    const res = await fetch(API);
+    const pizzas = await res.json();
+    const p = pizzas.find(p => p.id === id);
 
-// INICIAL
+    const novoStatus =
+        p.status === "disponivel" ? "promocao" :
+        p.status === "promocao" ? "indisponivel" : "disponivel";
+
+    await fetch(`${API}/${id}/status`,{
+        method:"PATCH",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ status: novoStatus })
+    });
+
+    listar();
+}
+
 listar();
 </script>
 
