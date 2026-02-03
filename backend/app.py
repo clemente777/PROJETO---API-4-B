@@ -138,7 +138,18 @@ def editar_pizza(id):
 
             if not isinstance(valor, (int, float)) or valor <= 0:
                 return jsonify({"erro": "Valor inválido"}), 400
+            
+            if dados.get("status") not in STATUS_VALIDOS:
+                return jsonify({
+                    "erro": "Status inválido",
+                    "status_validos": STATUS_VALIDOS
+                }), 400
 
+            if dados.get("tipo") not in TIPOS_PIZZA:
+                return jsonify({
+                    "erro": "Tipo de pizza inválido",
+                    "tipos_validos": TIPOS_PIZZA
+                }), 400
             
 
             # Atualiza os dados da pizza
