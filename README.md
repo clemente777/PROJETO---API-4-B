@@ -229,6 +229,15 @@ Ao cadastrar ou editar uma pizza, o backend valida os dados enviados. As regras 
     - `indisponivel`
     - `promocao`
 
+- **Tipos**
+  - Deve ser um dos valores permitidos:
+    - `tradicional`
+    - `doce`
+    - `vegana`
+    - `vegetariana`
+    - `especial`
+    - `gourmet`
+    
 > Todos os erros de validação retornam **HTTP 400** com uma mensagem clara em JSON.
 
 ### Exemplos de erros retornados
