@@ -36,7 +36,7 @@
         "nome": "quatro queijos",
         "descricao": "muito queijo",
         "valor": 55,
-        "status": "disponivel",
+        "status": "indisponivel",
         "tipo": "vegana"
     },
     {

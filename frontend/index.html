@@ -1,183 +1,81 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<title>Pizzaria dos Manos</title>
+  <meta charset="UTF-8">
+  <title>Pizzaria dos Manos</title>
 
-<style>
-:root{
-    --primary:#ff6b35;
-    --primary-dark:#e63946;
-    --card:#ffffff;
-    --text:#2b2b2b;
-    --success:#22c55e;
-    --warning:#f59e0b;
-    --danger:#ef4444;
-    --shadow:0 14px 35px rgba(0,0,0,.12);
-}
-
-*{ box-sizing:border-box; }
-
-body{
-    margin:0;
-    font-family: system-ui, Arial;
-    background:linear-gradient(180deg,#fff7f3,#fff0e8);
-    color:var(--text);
-}
-
-header{
-    background:linear-gradient(135deg,var(--primary),var(--primary-dark));
-    padding:50px;
-    text-align:center;
-    color:white;
-}
-
-.container{
-    width:90%;
-    max-width:1100px;
-    margin:40px auto;
-}
-
-.loading{
-    display:none;
-    font-weight:600;
-    margin-bottom:15px;
-    color:var(--primary-dark);
-}
-
-.erro{
-    display:none;
-    background:#ffe4e6;
-    color:var(--danger);
-    padding:14px;
-    border-radius:14px;
-    margin-bottom:15px;
-}
-
-.sucesso{
-    display:none;
-    background:#dcfce7;
-    color:var(--success);
-    padding:14px;
-    border-radius:14px;
-    margin-bottom:15px;
-}
-
-form{
-    background:var(--card);
-    padding:30px;
-    border-radius:22px;
-    box-shadow:var(--shadow);
-    margin-bottom:40px;
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:18px;
-}
-
-form input, form select{
-    padding:14px;
-    border-radius:14px;
-    border:1px solid #e5e7eb;
-}
-
-form button{
-    grid-column:1/-1;
-    padding:16px;
-    border-radius:16px;
-    background:var(--primary);
-    color:white;
-    border:none;
-    font-size:1.1rem;
-}
-
-.filtros{
-    display:flex;
-    gap:16px;
-    margin-bottom:30px;
-    flex-wrap:wrap;
-}
-
-.filtros select{
-    padding:14px;
-    border-radius:14px;
-    border:1px solid #e5e7eb;
-}
-
-#lista{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
-    gap:24px;
-}
-
-.card{
-    background:var(--card);
-    padding:24px;
-    border-radius:24px;
-    box-shadow:var(--shadow);
-}
-
-.card h3{ color:var(--primary-dark); margin:0; }
-
-.card button{
-    margin-top:12px;
-    padding:12px;
-    border-radius:14px;
-    border:none;
-    cursor:pointer;
-    color:white;
-}
-
-.card button:nth-of-type(1){ background:#fb923c; }
-.card button:nth-of-type(2){ background:var(--danger); }
-.card button:nth-of-type(3){ background:var(--warning); color:#000; }
-</style>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<body class="min-h-screen bg-gradient-to-b from-orange-50 to-orange-100 text-gray-800">
 
-<header>
-    <h1>Pizzaria dos Manos</h1>
-</header>
+  <!-- Cabeçalho -->
+  <header class="bg-gradient-to-r from-orange-500 to-red-500 py-12 text-center text-white shadow-xl">
+    <h1 class="text-4xl font-bold">Pizzaria dos Manos</h1>
+  </header>
 
-<div class="container">
+  <main class="mx-auto max-w-6xl px-4 py-10">
 
-<div id="loading" class="loading">Carregando pizzas...</div>
-<div id="erro" class="erro"></div>
-<div id="sucesso" class="sucesso"></div>
+    <!-- Mensagens -->
+    <div id="loading" class="hidden mb-4 font-semibold text-red-500">
+      Carregando pizzas...
+    </div>
 
-<form id="form">
-    <input type="hidden" id="id">
-    <input id="nome" placeholder="Nome da pizza">
-    <input id="valor" type="number" placeholder="Valor">
-    <input id="descricao" placeholder="Descrição">
+    <div id="erro" class="hidden mb-4 rounded-xl bg-red-100 p-4 text-red-600"></div>
+    <div id="sucesso" class="hidden mb-4 rounded-xl bg-green-100 p-4 text-green-600"></div>
 
-    <select id="status">
+    <!-- Formulário -->
+    <form id="form"
+      class="mb-10 grid grid-cols-1 gap-4 rounded-2xl bg-white p-8 shadow-lg sm:grid-cols-2 lg:grid-cols-3">
+
+      <input type="hidden" id="id">
+
+      <input id="nome" placeholder="Nome da pizza"
+        class="rounded-xl border p-3 focus:outline-none focus:ring-2 focus:ring-orange-400">
+
+      <input id="valor" type="number" placeholder="Valor"
+        class="rounded-xl border p-3 focus:outline-none focus:ring-2 focus:ring-orange-400">
+
+      <input id="descricao" placeholder="Descrição"
+        class="rounded-xl border p-3 focus:outline-none focus:ring-2 focus:ring-orange-400">
+
+      <select id="status"
+        class="rounded-xl border p-3 focus:outline-none focus:ring-2 focus:ring-orange-400">
         <option value="disponivel">Disponível</option>
         <option value="indisponivel">Indisponível</option>
         <option value="promocao">Promoção</option>
-    </select>
+      </select>
 
-    <select id="tipo">
+      <select id="tipo"
+        class="rounded-xl border p-3 focus:outline-none focus:ring-2 focus:ring-orange-400">
         <option value="tradicional">Tradicional</option>
         <option value="doce">Doce</option>
         <option value="vegana">Vegana</option>
         <option value="vegetariana">Vegetariana</option>
         <option value="especial">Especial</option>
         <option value="gourmet">Gourmet</option>
-    </select>
+        
+      </select>
 
-    <button type="submit">Salvar</button>
-</form>
+      <button type="submit"
+        class="rounded-xl bg-orange-500 py-4 font-semibold text-white transition hover:bg-orange-600 sm:col-span-2 lg:col-span-3">
+        Salvar
+      </button>
+    </form>
 
-<div class="filtros">
-    <select id="filtroStatus" onchange="listar()">
+    <!-- Filtros -->
+    <div class="mb-8 flex flex-wrap gap-4">
+      <select id="filtroStatus" onchange="listar()"
+        class="rounded-xl border p-3 focus:outline-none focus:ring-2 focus:ring-orange-400">
         <option value="">Todos os status</option>
         <option value="disponivel">Disponível</option>
         <option value="indisponivel">Indisponível</option>
         <option value="promocao">Promoção</option>
-    </select>
+      </select>
 
-    <select id="filtroTipo" onchange="listar()">
+      <select id="filtroTipo" onchange="listar()"
+        class="rounded-xl border p-3 focus:outline-none focus:ring-2 focus:ring-orange-400">
         <option value="">Todos os tipos</option>
         <option value="tradicional">Tradicional</option>
         <option value="doce">Doce</option>
@@ -185,19 +83,21 @@ form button{
         <option value="vegetariana">Vegetariana</option>
         <option value="especial">Especial</option>
         <option value="gourmet">Gourmet</option>
-    </select>
-</div>
+      </select>
+    </div>
 
-<div id="lista"></div>
-</div>
+    <!-- Lista -->
+    <div id="lista" class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+
+  </main>
 
 <script>
 const API = "http://localhost:5000/pizzas";
 
-const erro = document.getElementById("erro");
-const sucesso = document.getElementById("sucesso");
+/* Elementos */
 const loading = document.getElementById("loading");
 const lista = document.getElementById("lista");
+const form = document.getElementById("form");
 
 const idInput = document.getElementById("id");
 const nomeInput = document.getElementById("nome");
@@ -208,156 +108,168 @@ const tipoInput = document.getElementById("tipo");
 
 const filtroStatus = document.getElementById("filtroStatus");
 const filtroTipo = document.getElementById("filtroTipo");
+const erro = document.getElementById("erro");
+const sucesso = document.getElementById("sucesso");
 
-function limparMensagens(){
-    erro.style.display = "none";
-    sucesso.style.display = "none";
+/* Mensagens */
+function mostrar(elemento, mensagem) {
+  elemento.textContent = mensagem;
+  elemento.classList.remove("hidden");
 }
 
-async function listar(){
-    limparMensagens();
-    loading.style.display = "block";
-    lista.innerHTML = "";
-
-    try{
-        const res = await fetch(API);
-        if(!res.ok) throw new Error();
-        let pizzas = await res.json();
-
-        if (filtroStatus.value)
-            pizzas = pizzas.filter(p => p.status === filtroStatus.value);
-        if (filtroTipo.value)
-            pizzas = pizzas.filter(p => p.tipo === filtroTipo.value);
-
-        pizzas.forEach(p => {
-            lista.innerHTML += `
-            <div class="card">
-                <h3>${p.nome}</h3>
-                <p>${p.descricao}</p>
-                <p>💰 R$ ${p.valor}</p>
-                <p>Tipo: ${p.tipo}</p>
-                <p>Status: ${p.status}</p>
-                <button onclick="editar(${p.id})">Editar</button>
-                <button onclick="remover(${p.id})">Remover</button>
-                <button onclick="mudarStatus(${p.id})">Mudar status</button>
-            </div>`;
-        });
-    }catch{
-        erro.style.display = "block";
-        erro.innerText = "Erro ao carregar a API";
-    }finally{
-        loading.style.display = "none";
-    }
+function esconderMensagens() {
+  erro.classList.add("hidden");
+  sucesso.classList.add("hidden");
 }
 
+/* Listar pizzas */
+async function listar() {
+  esconderMensagens();
+  loading.classList.remove("hidden");
+  lista.innerHTML = "";
+
+  try {
+    const res = await fetch(API);
+    let pizzas = await res.json();
+
+    if (filtroStatus.value)
+      pizzas = pizzas.filter(p => p.status === filtroStatus.value);
+    if (filtroTipo.value)
+      pizzas = pizzas.filter(p => p.tipo === filtroTipo.value);
+
+    pizzas.forEach(p => {
+      lista.innerHTML += `
+      <div class="rounded-2xl bg-white p-6 shadow-lg">
+        <h3 class="text-xl font-bold text-red-500">${p.nome}</h3>
+        <p class="mt-2 text-gray-600">${p.descricao}</p>
+        <p class="mt-2">💰 R$ ${p.valor}</p>
+        <p class="text-sm text-gray-500">Tipo: ${p.tipo}</p>
+        <p class="text-sm text-gray-500">Status: ${p.status}</p>
+
+        <div class="mt-4 flex flex-col gap-2">
+          <button onclick="editar(${p.id})"
+            class="rounded-lg bg-orange-400 py-2 text-white hover:bg-orange-500">
+            Editar
+          </button>
+
+          <button onclick="remover(${p.id})"
+            class="rounded-lg bg-red-500 py-2 text-white hover:bg-red-600">
+            Remover
+          </button>
+
+          <button onclick="mudarStatus(${p.id})"
+            class="rounded-lg bg-yellow-400 py-2 hover:bg-yellow-500">
+            Mudar status
+          </button>
+        </div>
+      </div>`;
+    });
+
+  } catch {
+    mostrar(erro, "Erro ao carregar a API");
+  } finally {
+    loading.classList.add("hidden");
+  }
+}
+
+/* Salvar / editar */
 form.onsubmit = async e => {
-    e.preventDefault();
-    limparMensagens();
+  e.preventDefault();
+  esconderMensagens();
 
-    const pizza = {
-        nome: nomeInput.value.trim(),
-        descricao: descInput.value.trim(),
-        valor: Number(valorInput.value),
-        status: statusInput.value,
-        tipo: tipoInput.value
-    };
+  const pizza = {
+    nome: nomeInput.value.trim(),
+    descricao: descInput.value.trim(),
+    valor: Number(valorInput.value),
+    status: statusInput.value,
+    tipo: tipoInput.value
+  };
 
-    if (pizza.nome.length < 3)
-        return erroMsg("Nome deve ter no mínimo 3 caracteres");
-    if (!pizza.descricao)
-        return erroMsg("Descrição é obrigatória");
-    if (pizza.valor <= 0)
-        return erroMsg("Valor deve ser maior que zero");
+  if (pizza.nome.length < 3)
+    return mostrar(erro, "Nome deve ter no mínimo 3 caracteres");
+  if (pizza.valor <= 0)
+    return mostrar(erro, "Valor deve ser maior que zero");
 
-    try{
-        const res = await fetch(idInput.value ? `${API}/${idInput.value}` : API,{
-            method: idInput.value ? "PUT" : "POST",
-            headers:{ "Content-Type":"application/json" },
-            body: JSON.stringify(pizza)
-        });
+  const statusValidos = ["disponivel", "indisponivel", "promocao"];
+  if (!statusValidos.includes(pizza.status))
+    return mostrar(erro, "Selecione um status válido");
 
-        const data = await res.json();
-        if(!res.ok) return erroMsg(data.erro);
+  const tiposValidos = ["tradicional","doce","vegana","vegetariana","especial","gourmet"];
+  if (!tiposValidos.includes(pizza.tipo))
+    return mostrar(erro, "Selecione um tipo de pizza válido");
 
-        sucesso.style.display = "block";
-    sucesso.innerText = "Pizza salva com sucesso!";
+  try {
+    const res = await fetch(
+      idInput.value ? `${API}/${idInput.value}` : API,
+      {
+        method: idInput.value ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(pizza)
+      }
+    );
 
+    if (!res.ok) throw new Error();
+
+    mostrar(sucesso, "🍕 Pizza salva com sucesso!");
     form.reset();
     idInput.value = "";
 
-    setTimeout(() => {
-        listar();
-}, 1500);
+    setTimeout(listar, 1500);
 
-    }catch{
-        erroMsg("Erro ao conectar com a API");
-    }
+  } catch {
+    mostrar(erro, "Erro ao salvar pizza");
+  }
 };
 
-function erroMsg(msg){
-    erro.style.display = "block";
-    erro.innerText = msg;
+/* Editar */
+async function editar(id) {
+  const res = await fetch(API);
+  const pizzas = await res.json();
+  const p = pizzas.find(p => p.id === id);
+
+  idInput.value = p.id;
+  nomeInput.value = p.nome;
+  valorInput.value = p.valor;
+  descInput.value = p.descricao;
+  statusInput.value = p.status;
+  tipoInput.value = p.tipo;
 }
 
-async function editar(id){
-    const res = await fetch(API);
-    const pizzas = await res.json();
-    const p = pizzas.find(p => p.id === id);
-    idInput.value = p.id;
-    nomeInput.value = p.nome;
-    valorInput.value = p.valor;
-    descInput.value = p.descricao;
-    statusInput.value = p.status;
-    tipoInput.value = p.tipo;
+/* Remover */
+async function remover(id) {
+  if (!confirm("Deseja remover esta pizza?")) return;
+
+  esconderMensagens();
+
+  try {
+    const res = await fetch(`${API}/${id}`, { method: "DELETE" });
+    if (!res.ok) throw new Error();
+
+    mostrar(sucesso, "🗑️ Pizza removida com sucesso!");
+    setTimeout(listar, 1500);
+
+  } catch {
+    mostrar(erro, "Erro ao remover pizza");
+  }
 }
 
+/* Mudar status */
+async function mudarStatus(id) {
+  const res = await fetch(API);
+  const pizzas = await res.json();
+  const p = pizzas.find(p => p.id === id);
 
-async function remover(id){
-    if (!confirm("Deseja remover?")) return;
+  const novo =
+    p.status === "disponivel" ? "promocao" :
+    p.status === "promocao" ? "indisponivel" : "disponivel";
 
-    erro.style.display = "none";
-    sucesso.style.display = "none";
+  await fetch(`${API}/${id}/status`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status: novo })
+  });
 
-    try{
-        const res = await fetch(`${API}/${id}`, { method: "DELETE" });
-        const data = await res.json();
-
-        if (!res.ok) {
-            erro.style.display = "block";
-            erro.innerText = data.erro || "Erro ao remover pizza";
-            return;
-        }
-
-        sucesso.style.display = "block";
-        sucesso.innerText = " Pizza removida com sucesso!";
-
-        setTimeout(() => {
-            listar();
-        }, 1500);
-
-    } catch {
-        erro.style.display = "block";
-        erro.innerText = "Erro ao conectar com a API";
-    }
-}
-
-
-async function mudarStatus(id){
-    const res = await fetch(API);
-    const pizzas = await res.json();
-    const p = pizzas.find(p => p.id === id);
-
-    const novoStatus =
-        p.status === "disponivel" ? "promocao" :
-        p.status === "promocao" ? "indisponivel" : "disponivel";
-
-    await fetch(`${API}/${id}/status`,{
-        method:"PATCH",
-        headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify({ status: novoStatus })
-    });
-
-    listar();
+  listar();
 }
 
 listar();
